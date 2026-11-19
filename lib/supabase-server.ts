@@ -2,9 +2,14 @@ import { createServerClient } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabaseSecretKey = process.env.SUPABASE_SECRET_API_KEY!;
+// Fallbacks keep the app buildable/prerenderable before Supabase keys are
+// configured. Real values come from Settings → Environment variables.
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
+const supabaseSecretKey =
+  process.env.SUPABASE_SECRET_API_KEY || 'placeholder-secret-key';
 
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies();

@@ -1,7 +1,12 @@
 import { createBrowserClient } from '@supabase/ssr';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+// Fallbacks keep the app buildable/prerenderable before Supabase keys are
+// configured. Real values come from Settings → Environment variables and are
+// inlined at build time for NEXT_PUBLIC_* vars.
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
 
 let client: ReturnType<typeof createBrowserClient> | null = null;
 let initPromise: Promise<void> | null = null;
